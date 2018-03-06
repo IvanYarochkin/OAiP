@@ -1,0 +1,80 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Buttons, MatFu1;
+
+type
+    TForm1 = class(TForm)
+    BitBtn1: TBitBtn;
+    Button1: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    RadioGroup1: TRadioGroup;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Memo1: TMemo;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+Type
+fun=function(x:extended):extended;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+Edit1.Text:='0';
+Edit2.Text:='5';
+Edit3.Text:='0,5';
+Memo1.Clear;
+RadioGroup1.ItemIndex:=0;
+end;
+
+procedure Tabl(f:fun;xn,xk,h:extended);
+var
+x,y:extended;
+begin
+x:=xn;
+repeat
+y:=f(x);
+Form1.Memo1.Lines.Add('x='+FloatToStrF(x,fffixed,8,3)+'y='+FloatToStrF(y,fffixed,8,3));
+x:=x+h;
+until (x>xk);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var xn,xk,h:extended;
+begin
+Memo1.Clear;
+xn:=StrToFloat(Edit1.Text);
+xk:=StrToFloat(Edit2.Text);
+h:=StrToFloat(Edit3.Text);
+
+Case RadioGroup1.ItemIndex of
+0:Tabl(Tg,xn,xk,h);
+1:Tabl(Ch,xn,xk,h);
+2:Tabl(DoubleX,xn,xk,h);
+end;
+end;
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+Application.Terminate;
+end;
+end.

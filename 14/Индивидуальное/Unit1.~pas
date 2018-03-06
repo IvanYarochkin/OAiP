@@ -1,0 +1,99 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Grids, DBGrids;
+
+type
+  TForm1 = class(TForm)
+    DBGrid1: TDBGrid;
+    Button1: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Button2: TButton;
+    GroupBox1: TGroupBox;
+    Edit4: TEdit;
+    Button3: TButton;
+    Label5: TLabel;
+    GroupBox2: TGroupBox;
+    Edit5: TEdit;
+    Button4: TButton;
+    Label6: TLabel;
+    GroupBox3: TGroupBox;
+    Edit6: TEdit;
+    Button5: TButton;
+    Label7: TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses Unit2;
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+with DataModule2 do
+begin
+  ADOQuery1.Close;
+  ADOQuery1.SQL.Clear;
+  ADOQuery1.SQL.Add('select * from goods');
+  ADOQuery1.Open;
+end;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+If (Edit1.Text<>'') AND (Edit2.Text<>'') AND (Edit3.Text<>'') then
+begin
+  with DataModule2 do
+  begin
+    ADOQuery1.Close;
+    ADOQuery1.Open;
+    If ADOQuery1.IsEmpty=false
+Then
+ADOQuery1.Insert;
+    ADOQuery1.Edit;
+    ADOQuery1DSDesigner.AsString:=Edit1.Text;
+    ADOQuery1DSDesigner2.AsString:=Edit2.Text;
+    ADOQuery1DSDesigner3.AsString:=Edit3.Text;
+    ADOQuery1.Post;
+    ADOQuery1.Open;
+  end;
+end;
+Edit1.Clear;
+Edit2.Clear;
+Edit3.Clear;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+with DataModule2 do
+begin
+ADOQuery1.Close;
+ADOQuery1.SQL.Clear;
+ADOQuery1.SQL.Add('select * from goods');
+ADOQuery1.SQL.Add('where Название товара = pname;');
+ADOQuery1.Parameters.ParamByName('pname').Value:=Edit4.Text+'%';
+ADOQuery1.Open;
+end;
+end;
+
+end.
